@@ -1,4 +1,4 @@
-import Header from "./Header/index";
+import Header from "../components/Header";
 
 // eslint-disable-next-line react/prop-types
 function HeaderOnly({ children }) {

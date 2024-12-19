@@ -1,0 +1,26 @@
+@import "normalize.css";
+@import url('https://cdnjs.cloudflare.com/ajax/libs/IBM-Plex-Sans/1.0.0/ibm-plex-sans.min.css');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+
+@layer base {
+    :root {
+        --primary: #fc2c55;
+    }
+
+    html {
+        font-size: 62.5%;
+    }
+
+    body {
+        @apply font-sans text-base leading-6 text-gray-900;
+        text-rendering: optimizeSpeed;
+    }
+
+    * {
+        @apply box-border;
+    }
+}

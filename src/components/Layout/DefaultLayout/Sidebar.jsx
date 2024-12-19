@@ -1,7 +1,7 @@
 function SideBar() {
   return (
     <>
-      <h1>SideBar</h1>
+      <div className="w-[356px]">SideBar</div>
     </>
   );
 }
