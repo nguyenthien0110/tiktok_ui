@@ -3,7 +3,7 @@ import IconCheckCircle from "../icon/IconCheckCircle";
 function SearchAccountItem() {
   return (
     <>
-      <div className="flex hover:bg-[rgba(22,24,35,0.05)]">
+      <div className="flex p-3 hover:bg-[rgba(22,24,35,0.05)] cursor-pointer">
         <img
           className="h-12 w-12 rounded-[50%] object-cover"
           src="https://img.tripi.vn/cdn-cgi/image/width=700,height=700/https://gcs.tripi.vn/public-tripi/tripi-feed/img/474072oeB/anh-dai-dien-buon-ngau_023706184.jpg"

@@ -4,6 +4,15 @@ export default {
     extend: {
       colors: {
         primary: "#fc2c55",
+        black: "#000000",
+        white: "#fff",
+        color: ({ opacityValue }) =>
+          opacityValue !== undefined
+            ? `rgba(22, 24, 35, ${opacityValue})`
+            : "rgba(22, 24, 35, 1)",
+      },
+      borderColor: {
+        transparent: "transparent",
       },
       fontFamily: {
         sans: ["IBM Plex Sans", "sans-serif"],
@@ -14,7 +23,6 @@ export default {
       spacing: {
         "default-h": "60px",
         "default-w": "1150px",
-        "txt-default": "#000",
       },
       keyframes: {
         wiggle: {
