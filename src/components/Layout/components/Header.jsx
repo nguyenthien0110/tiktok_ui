@@ -10,13 +10,19 @@ import Button from "../../../core/component/Button";
 import IconMenuVertical from "../../../core/icon/IconMenuVertical";
 import MenuItem from "../../../core/component/MenuItem";
 import { getAccountList } from "../../../services/AccountService";
-import { MenuItemValue } from "../../../core/utill/MenuItem";
+import { MenuItemUserValue, MenuItemValue } from "../../../core/utill/MenuItem";
 import IconChevronBackSharp from "../../../core/icon/IconChevronBackSharp";
+import IconCloudUpload from "../../../core/icon/IconCloudUpload";
+import IconMessage from "../../../core/icon/IconMessage";
+import IconBxMessageMinus from "../../../core/icon/IconBxMessageMinus";
+import ButtonIcon from "../../../core/component/ButtonIcon";
 
 function Header() {
   const [searchResult, setSeachResult] = useState([]);
   const [menuItem, setMenuitem] = useState([{ MenuItemValue }]);
+  const [menuUserItem, setMenuUseritem] = useState([{ MenuItemUserValue }]);
   const [showBackSharp, setShowBackSharp] = useState(false);
+  const currenUser = true;
 
   useEffect(() => {
     setTimeout(() => {
@@ -28,13 +34,21 @@ function Header() {
 
   const handleClick = (item) => {
     if (item.children) {
-      setMenuitem((prev) => [...prev, { language: item.children }]);
+      if (currenUser) {
+        setMenuUseritem((prev) => [...prev, { language: item.children }]);
+      } else {
+        setMenuitem((prev) => [...prev, { language: item.children }]);
+      }
       setShowBackSharp(true);
     }
   };
 
   const handleRemoveLanguage = () => {
-    setMenuitem((prev) => prev.slice(0, prev.length - 1));
+    if (currenUser) {
+      setMenuUseritem((prev) => prev.slice(0, prev.length - 1));
+    } else {
+      setMenuitem((prev) => prev.slice(0, prev.length - 1));
+    }
     setShowBackSharp(false);
   };
 
@@ -47,8 +61,8 @@ function Header() {
           </div>
 
           <Tippy
-            zIndex={-1}
-            visible={searchResult.length > 0}
+            // visible={searchResult.length > 0}
+            zIndex={999}
             interactive={true}
             render={(attrs) => (
               <Popup className="!w-[341px]">
@@ -88,56 +102,124 @@ function Header() {
             </div>
           </Tippy>
 
-          <div className="flex right-0 justify-between gap-3 items-center">
-            <Button text>Log in</Button>
-            <Button primary>Log in</Button>
-            <Tippy
-              zIndex={-1}
-              interactive
-              placement="bottom-end"
-              render={(attrs) => (
-                <Popup className="!w-[216px] !h-auto !py-3">
-                  <div {...attrs}>
-                    {showBackSharp && (
-                      <MenuItem
-                        className="flex !pl-12"
-                        icon={<IconChevronBackSharp />}
-                        content={"Language"}
-                        onClick={handleRemoveLanguage}
-                      />
-                    )}
-                    {menuItem.at(-1) &&
-                      Object.keys(menuItem.at(-1)).map((key) => {
-                        const subItems = menuItem.at(-1)[key];
-                        if (Array.isArray(subItems)) {
-                          return subItems.map((item, index) => (
-                            <MenuItem
-                              key={index}
-                              content={item.content}
-                              icon={item.icon}
-                              to={item.toLink}
-                              onClick={
-                                item.children
-                                  ? () => handleClick(item)
-                                  : undefined
-                              }
-                            />
-                          ));
-                        }
-                        return null;
-                      })}
-                  </div>
-                </Popup>
-              )}
-            >
-              <div>
-                <IconMenuVertical
-                  id={"menuIcon"}
-                  className="text-[26px] cursor-pointer text-color/[1] font-extrabold"
-                />
-              </div>
-            </Tippy>
-          </div>
+          {currenUser ? (
+            <div className="flex h-12 justify-items-end items-center gap-7">
+              <ButtonIcon title={"Upload"} key={1} icon={<IconCloudUpload />} />
+              <ButtonIcon title={"Message"} key={2} icon={<IconMessage />} />
+              <ButtonIcon
+                title={"Notification"}
+                key={3}
+                icon={<IconBxMessageMinus />}
+              />
+              <Tippy
+                visible={true}
+                zIndex={999}
+                interactive
+                placement="bottom-end"
+                render={(attrs) => (
+                  <Popup className="!w-[216px] !h-auto !py-3">
+                    <div {...attrs}>
+                      {showBackSharp && (
+                        <MenuItem
+                          className="flex !pl-12"
+                          icon={<IconChevronBackSharp />}
+                          content={"Language"}
+                          onClick={handleRemoveLanguage}
+                        />
+                      )}
+                      {menuUserItem.at(-1) &&
+                        Object.keys(menuUserItem.at(-1)).map((key) => {
+                          const subItems = menuUserItem.at(-1)[key];
+                          if (Array.isArray(subItems)) {
+                            return subItems.map((item, index) => (
+                              <MenuItem
+                                key={index}
+                                content={item.content}
+                                icon={item.icon}
+                                to={item.toLink}
+                                onClick={
+                                  item.children
+                                    ? () => handleClick(item)
+                                    : undefined
+                                }
+                              />
+                            ));
+                          }
+                          return null;
+                        })}
+                    </div>
+                  </Popup>
+                )}
+                onHide={() => {
+                  setMenuUseritem((prev) => prev.slice(0, 1));
+                  setShowBackSharp(false);
+                }}
+              >
+                <div className="">
+                  <img
+                    className="flex h-12 w-12 rounded-[50%] object-cover"
+                    src={"../../../public/img/image.png"}
+                    alt="avatar"
+                  />
+                </div>
+              </Tippy>
+            </div>
+          ) : (
+            <div className="flex right-0 justify-between gap-3 items-center">
+              <Button text>Log in</Button>
+              <Button primary>Log in</Button>
+              <Tippy
+                zIndex={-1}
+                interactive
+                placement="bottom-end"
+                render={(attrs) => (
+                  <Popup className="!w-[216px] !h-auto !py-3">
+                    <div {...attrs}>
+                      {showBackSharp && (
+                        <MenuItem
+                          className="flex !pl-12"
+                          icon={<IconChevronBackSharp />}
+                          content={"Language"}
+                          onClick={handleRemoveLanguage}
+                        />
+                      )}
+                      {menuItem.at(-1) &&
+                        Object.keys(menuItem.at(-1)).map((key) => {
+                          const subItems = menuItem.at(-1)[key];
+                          if (Array.isArray(subItems)) {
+                            return subItems.map((item, index) => (
+                              <MenuItem
+                                key={index}
+                                content={item.content}
+                                icon={item.icon}
+                                to={item.toLink}
+                                onClick={
+                                  item.children
+                                    ? () => handleClick(item)
+                                    : undefined
+                                }
+                              />
+                            ));
+                          }
+                          return null;
+                        })}
+                    </div>
+                  </Popup>
+                )}
+                onHide={() => {
+                  setMenuitem((prev) => prev.slice(0, 1));
+                  setShowBackSharp(false);
+                }}
+              >
+                <div>
+                  <IconMenuVertical
+                    id={"menuIcon"}
+                    className="text-[26px] cursor-pointer text-color/[1] font-extrabold"
+                  />
+                </div>
+              </Tippy>
+            </div>
+          )}
         </div>
       </header>
     </>
