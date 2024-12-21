@@ -1,0 +1,25 @@
+{
+  "accounts": [
+    {
+      "id": 1,
+      "username": "john_doe",
+      "password": "password123",
+      "imgLink": "https://res.cloudinary.com/dyjpzjnro/image/upload/v1734752610/img/ccjgodv5lhddqhyedbjo.jpg",
+      "idRole": 1
+    },
+    {
+      "id": 2,
+      "username": "jane_smith",
+      "password": "securepass456",
+      "imgLink": "https://res.cloudinary.com/dyjpzjnro/image/upload/v1734752610/img/ccjgodv5lhddqhyedbjo.jpg",
+      "idRole": 2
+    },
+    {
+      "id": 3,
+      "username": "alice_jones",
+      "password": "alicepass789",
+      "imgLink": "https://res.cloudinary.com/dyjpzjnro/image/upload/v1734752610/img/ccjgodv5lhddqhyedbjo.jpg",
+      "idRole": 3
+    }
+  ]
+}
