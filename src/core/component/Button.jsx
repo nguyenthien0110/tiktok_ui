@@ -12,6 +12,7 @@ function Button({
   rounded = false,
   size = "m",
   children,
+  icon,
   className,
   onClick,
   ...Props
@@ -62,10 +63,17 @@ function Button({
           { "hover:underline": text },
           { "pointer-events-none opacity-50 select-none": disable },
           sizeClasses[size],
-          "text-[1.6rem] font-bold min-w-24 py-[9px] px-[16px] rounded-[4px] border-[1px] border-transparent"
+          "w-full text-[1.6rem] font-bold min-w-24 py-[9px] px-[16px] rounded-[4px] border-[1px] border-transparent"
         )}
       >
-        <span>{children}</span>
+        {icon ? (
+          <div className="flex items-center">
+          <span className="h-10 w-10 flex justify-center items-center ml-[-16px]">{icon}</span>
+          <span className="ml-[16px] text-[14px]">{children}</span>
+        </div>
+        ) : (
+          <span>{children}</span>
+        )}
       </Comp>
     </>
   );

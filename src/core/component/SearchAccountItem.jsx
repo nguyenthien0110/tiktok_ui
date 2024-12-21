@@ -1,24 +1,35 @@
+import { memo, useState } from "react";
 import IconCheckCircle from "../icon/IconCheckCircle";
 
-function SearchAccountItem() {
+function SearchAccountItem(children) {
+  const fallbackUrl = "../../../public/img/image.png";
+  const [url, setUrl] = useState(children.data.imgLink);
+
+  const handleError = () => {
+    setUrl(fallbackUrl);
+  };
+
   return (
     <>
-      <div className="flex p-3 hover:bg-[rgba(22,24,35,0.05)] cursor-pointer">
+      <div className="flex p-4 hover:bg-[rgba(22,24,35,0.05)] cursor-pointer">
         <img
-          className="h-12 w-12 rounded-[50%] object-cover"
-          src="https://img.tripi.vn/cdn-cgi/image/width=700,height=700/https://gcs.tripi.vn/public-tripi/tripi-feed/img/474072oeB/anh-dai-dien-buon-ngau_023706184.jpg"
-          alt=""
+          className="flex h-12 w-12 rounded-[50%] object-cover"
+          src={url || "../../../public/img/image.png"}
+          onError={(e) => handleError(e)}
+          alt="avatar"
         />
-        <div className="flex-1 ml-3">
+        <div className="flex-1 ml-5">
           <h4 className="flex text-base font-medium">
-            <span className="mt-2">Nguyen Van Bao</span>
+            <span className="">{children.data.username}</span>
             <IconCheckCircle className="mt-2 ml-2 text-[1.2rem] text-[rgba(32,213,236)]" />
           </h4>
-          <span className="text-[14px] text-[rgba(22,24,35,0.5)]">BeoBeo.info</span>
+          <span className="text-[14px] text-[rgba(22,24,35,0.5)]">
+            {children.data.username}.info
+          </span>
         </div>
       </div>
     </>
   );
 }
 
-export default SearchAccountItem;
+export default memo(SearchAccountItem);

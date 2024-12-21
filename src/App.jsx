@@ -22,9 +22,13 @@ function App() {
                   key={index}
                   path={route.path}
                   element={
-                    <Layout>
+                    route.path === "*" ? (
                       <Page />
-                    </Layout>
+                    ) : (
+                      <Layout>
+                        <Page />
+                      </Layout>
+                    )
                   }
                 />
               );
