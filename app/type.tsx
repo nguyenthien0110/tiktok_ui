@@ -48,3 +48,8 @@ export interface Comments {
   text: string;
   create_at: string;
 }
+
+export interface UploadError{
+  type: string;
+  message: string;
+}
