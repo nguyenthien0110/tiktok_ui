@@ -37,7 +37,7 @@ function SideNavMain() {
             <div className="cursor-pointer">
               <MenuItemFollow
                 user={{
-                  id: "1",
+                  id: "123",
                   name: "test user",
                   image: "https://placehold.jp/400x400.png",
                 }}

@@ -43,7 +43,7 @@ function TopNav() {
             <div className="absolute bg-white max-w-[910px] h-auto w-full z-20 left-0 top-12 border p-1">
               <div className="p-1">
                 <Link
-                  href={`/profile/1`}
+                  href={`/profile/123`}
                   className="flex items-center justify-between w-full cursor-pointer hover:bg-[#F12b56] p-1 px-2 hover:text-white"
                 >
                   <div className="flex items-center">

@@ -13,12 +13,12 @@ export default function Home() {
             <PostMain
               post={{
                 id: "123",
-                user_id: "456",
+                user_id: "345",
                 video_url: "/images/data.mp4",
                 text: "this is some text",
                 created_at: "date here",
                 profile: {
-                  user_id: "456",
+                  user_id: "345",
                   name: "User 1",
                   image: "https://placehold.jp/100x100.png",
                 },
