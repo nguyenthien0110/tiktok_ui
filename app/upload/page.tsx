@@ -130,11 +130,6 @@ export default function Upload() {
                     </div>
                   </div>
                 ) : null}
-
-                <img
-                  className="absolute z-20 pointer-events-none"
-                  src="/images/mobile-case.png"
-                />
                 <img
                   className="absolute right-4 bottom-6 z-20"
                   width="90"
@@ -144,7 +139,7 @@ export default function Upload() {
                   autoPlay
                   loop
                   muted
-                  className="absolute rounded-xl object-cover z-10 p-[13px] w-full h-full"
+                  className="absolute rounded-3xl object-cover z-10 p-[13px] w-full h-full"
                   src={fileDisplay}
                 />
 
