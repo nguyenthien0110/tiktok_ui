@@ -1,7 +1,7 @@
 import { create } from "zustand";
 import { persist, devtools, createJSONStorage } from "zustand/middleware";
+import { RandomUsers } from "../types";
 import useGetRandomUsers from "../hooks/useGetRandomUsers";
-import { RandomUsers } from "../type";
 
 interface GeneralStore {
   isLoginOpen: boolean;
@@ -28,7 +28,7 @@ export const useGeneralStore = create<GeneralStore>()(
         },
       }),
       {
-        name: "store",
+        name: "tiktok_storage",
         storage: createJSONStorage(() => localStorage),
       }
     )

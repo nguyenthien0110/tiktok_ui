@@ -1,10 +1,10 @@
 import { create } from "zustand";
 import { persist, devtools, createJSONStorage } from "zustand/middleware";
+import { CommentWithProfile } from "../types";
 import useGetCommentsByPostId from "../hooks/useGetCommentsByPostId";
-import { CommmentWithProfile } from "../type";
 
 interface CommentStore {
-  commentsByPost: CommmentWithProfile[];
+  commentsByPost: CommentWithProfile[];
   setCommentsByPost: (postId: string) => void;
 }
 

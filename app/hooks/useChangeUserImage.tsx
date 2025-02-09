@@ -1,4 +1,4 @@
-import { storage } from "@/app/libs/AppWriteClient";
+import { storage } from "@/libs/AppWriteClient";
 import Image from "image-js";
 
 const useChangeUserImage = async (
@@ -29,7 +29,6 @@ const useChangeUserImage = async (
       finalFile
     );
 
-    // if current image is not default image delete
     if (
       currentImage !=
       String(process.env.NEXT_PUBLIC_PLACEHOLDER_DEAFULT_IMAGE_ID)

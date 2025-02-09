@@ -1,7 +1,7 @@
 import { create } from "zustand";
 import { persist, devtools, createJSONStorage } from "zustand/middleware";
+import { Like } from "../types";
 import useGetLikesByPostId from "../hooks/useGetLikesByPostId";
-import { Like } from "../type";
 
 interface LikeStore {
   likesByPost: Like[];

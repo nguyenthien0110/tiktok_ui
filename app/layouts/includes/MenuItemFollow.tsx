@@ -1,21 +1,19 @@
-"use client";
-
-import React, { useEffect, useState } from "react";
-import { MenuItemFollowCompTypes } from "../../type";
+import useCreateBucketUrl from "@/app/hooks/useCreateBucketUrl";
+import { MenuItemFollowCompTypes } from "@/app/types";
 import Link from "next/link";
 import { AiOutlineCheck } from "react-icons/ai";
 
-function MenuItemFollow({ user }: MenuItemFollowCompTypes) {
+export default function MenuItemFollow({ user }: MenuItemFollowCompTypes) {
   return (
     <>
       <Link
-        href={`/profile/${user.id}`}
+        href={`/profile/${user?.id}`}
         className="flex items-center hover:bg-gray-100 rounded-md w-full py-1.5 px-2"
       >
         <img
           className="rounded-full lg:mx-0 mx-auto"
           width="35"
-          src={user?.image}
+          src={useCreateBucketUrl(user?.image)}
         />
         <div className="lg:pl-2.5 lg:block hidden">
           <div className="flex items-center">
@@ -23,16 +21,15 @@ function MenuItemFollow({ user }: MenuItemFollowCompTypes) {
             <p className="ml-1 rounded-full bg-[#58D5EC] h-[14px] relative">
               <AiOutlineCheck
                 className="relative p-[3px]"
-                color="#ffffff"
+                color="#FFFFFF"
                 size="15"
               />
             </p>
           </div>
+
           <p className="font-light text-[12px] text-gray-600">{user?.name}</p>
         </div>
       </Link>
     </>
   );
 }
-
-export default MenuItemFollow;

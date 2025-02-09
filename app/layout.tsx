@@ -1,19 +1,26 @@
-import type { Metadata } from "next";
+import UserProvider from "./context/user";
+import AllOverlays from "@/app/components/AllOverlays";
 import "./globals.css";
+import type { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "Tiktok",
-  description: "Tiktok clone",
+  title: "TikTok Clone",
+  description: "TikTok Clone",
 };
 
 export default function RootLayout({
   children,
-}: Readonly<{
+}: {
   children: React.ReactNode;
-}>) {
+}) {
   return (
     <html lang="en" suppressHydrationWarning>
-      <body suppressHydrationWarning>{children}</body>
+      <UserProvider>
+        <body suppressHydrationWarning>
+          <AllOverlays />
+          {children}
+        </body>
+      </UserProvider>
     </html>
   );
 }

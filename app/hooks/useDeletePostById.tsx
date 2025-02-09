@@ -1,4 +1,4 @@
-import { database, ID, storage } from "@/app/libs/AppWriteClient";
+import { database, Query, storage } from "@/libs/AppWriteClient";
 import useDeleteComment from "./useDeleteComment";
 import useDeleteLike from "./useDeleteLike";
 import useGetCommentsByPostId from "./useGetCommentsByPostId";

@@ -7,11 +7,11 @@ import React, {
   useEffect,
   ReactNode,
 } from "react";
+import { account, ID } from "@/libs/AppWriteClient";
+import { User, UserContextTypes } from "../types";
 import { useRouter } from "next/navigation";
-import { User, UserContextTypes } from "../type";
 import useGetProfileByUserId from "../hooks/useGetProfileByUserId";
 import useCreateProfile from "../hooks/useCreateProfile";
-import { account, ID } from "../libs/AppWriteClient";
 
 const UserContext = createContext<UserContextTypes | null>(null);
 

@@ -1,9 +1,9 @@
 import { create } from "zustand";
 import { persist, devtools, createJSONStorage } from "zustand/middleware";
+import { Post, PostWithProfile } from "../types";
 import useGetAllPosts from "../hooks/useGetAllPosts";
 import useGetPostsByUser from "../hooks/useGetPostsByUserId";
 import useGetPostById from "../hooks/useGetPostById";
-import { Post, PostWithProfile } from "../type";
 
 interface PostStore {
   allPosts: PostWithProfile[];
@@ -36,7 +36,7 @@ export const usePostStore = create<PostStore>()(
         },
       }),
       {
-        name: "store",
+        name: "tiktok_storage",
         storage: createJSONStorage(() => localStorage),
       }
     )
