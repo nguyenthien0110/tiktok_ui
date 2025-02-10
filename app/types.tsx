@@ -145,3 +145,10 @@ export interface MenuItemTypes {
 export interface MenuItemFollowCompTypes {
   user: RandomUsers;
 }
+
+// Following
+export interface Follower {
+  id: string;
+  user_id: string;
+  follower_id: string;
+}

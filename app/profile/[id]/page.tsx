@@ -3,25 +3,106 @@
 import PostUser from "@/app/components/profile/PostUser";
 import MainLayout from "@/app/layouts/MainLayout";
 import { BsPencil } from "react-icons/bs";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useUser } from "@/app/context/user";
 import ClientOnly from "@/app/components/ClientOnly";
-import { ProfilePageTypes, User } from "@/app/types";
+import { Follower, ProfilePageTypes, User } from "@/app/types";
 import { usePostStore } from "@/app/stores/post";
 import { useProfileStore } from "@/app/stores/profile";
 import { useGeneralStore } from "@/app/stores/general";
 import useCreateBucketUrl from "@/app/hooks/useCreateBucketUrl";
+import { BiLoaderCircle } from "react-icons/bi";
+import useGetFollowById from "@/app/hooks/useGetFollowByUserId";
+import useCreateFollow from "@/app/hooks/useCreateFollow";
+import useDeleteFollow from "@/app/hooks/useDeleteFollow";
 
 export default function Profile({ params }: ProfilePageTypes) {
   const contextUser = useUser();
   let { postsByUser, setPostsByUser } = usePostStore();
   let { setCurrentProfile, currentProfile } = useProfileStore();
-  let { isEditProfileOpen, setIsEditProfileOpen } = useGeneralStore();
+  let { isEditProfileOpen, setIsEditProfileOpen, setIsLoginOpen } =
+    useGeneralStore();
+
+  const [follower, setFollower] = useState<Follower[]>([]);
+  const [hasClickedFollow, setHasClickedFollow] = useState<boolean>(false);
+  const [userFollowed, setUserFollowed] = useState<boolean>(false);
 
   useEffect(() => {
     setCurrentProfile(params?.id);
     setPostsByUser(params?.id);
   }, []);
+
+  useEffect(() => {
+    getAllFollowByUserId();
+  }, [params]);
+
+  const getAllFollowByUserId = async () => {
+    let result = await useGetFollowById(contextUser?.user?.id || "");
+    setFollower(result);
+  };
+
+  const follow = async () => {
+    setHasClickedFollow(true);
+    await useCreateFollow(contextUser?.user?.id || "", params?.id);
+    await getAllFollowByUserId();
+    hasUserFollow();
+    setHasClickedFollow(false);
+  };
+
+  const unfollow = async (id: string) => {
+    setHasClickedFollow(true);
+    await useDeleteFollow(id);
+    await getAllFollowByUserId();
+    hasUserFollow();
+    setHasClickedFollow(false);
+  };
+
+  const hasUserFollow = () => {
+    if (!contextUser) return;
+
+    if (follower?.length < 1 || !contextUser?.user?.id) {
+      setUserFollowed(false);
+      return;
+    }
+    let res = useIsFollow(contextUser?.user?.id, params?.id, follower);
+    setUserFollowed(res ? true : false);
+  };
+
+  const useIsFollow = (
+    userId: string,
+    followerId: string,
+    follower: Array<Follower>
+  ) => {
+    let res: Follower[] = [];
+    follower?.forEach((follow) => {
+      if (follow.user_id == userId && follow.follower_id == followerId)
+        res.push(follow);
+    });
+    if (typeof res == undefined) return;
+    return res.length > 0;
+  };
+
+  const followOrUnfollow = () => {
+    if (!contextUser?.user?.id) {
+      setIsLoginOpen(true);
+      return;
+    }
+
+    let res = useIsFollow(contextUser?.user?.id, params?.id, follower);
+
+    if (!res) {
+      follow();
+    } else {
+      follower.forEach((follow: Follower) => {
+        if (
+          contextUser?.user?.id == follow?.user_id &&
+          follow?.follower_id == params?.id
+        ) {
+          unfollow(follow?.id);
+        }
+      });
+    }
+  };
 
   return (
     <>
@@ -55,7 +136,9 @@ export default function Profile({ params }: ProfilePageTypes) {
                 )}
               </ClientOnly>
 
-              {contextUser?.user?.id == params?.id ? (
+              {contextUser?.user?.id &&
+              params?.id &&
+              contextUser?.user?.id === params?.id ? (
                 <button
                   onClick={() =>
                     setIsEditProfileOpen(
@@ -68,9 +151,39 @@ export default function Profile({ params }: ProfilePageTypes) {
                   <span>Edit profile</span>
                 </button>
               ) : (
-                <button className="flex item-center rounded-md py-1.5 px-8 mt-3 text-[15px] text-white font-semibold bg-[#F02C56]">
-                  Follow
-                </button>
+                <>
+                  {follower &&
+                  params?.id &&
+                  follower
+                    .map((item) => item.follower_id)
+                    .includes(params?.id) ? (
+                    <>
+                      <button
+                        onClick={followOrUnfollow}
+                        className="flex item-center rounded-md py-1.5 px-8 mt-3 text-[15px] text-gray-500 font-semibold border border-gray-500"
+                      >
+                        {!hasClickedFollow ? (
+                          <>Following</>
+                        ) : (
+                          <BiLoaderCircle className="animate-spin" size="25" />
+                        )}
+                      </button>
+                    </>
+                  ) : (
+                    <>
+                      <button
+                        onClick={followOrUnfollow}
+                        className="flex item-center rounded-md py-1.5 px-8 mt-3 text-[15px] text-white font-semibold bg-[#F02C56]"
+                      >
+                        {!hasClickedFollow ? (
+                          <>Follow</>
+                        ) : (
+                          <BiLoaderCircle className="animate-spin" size="25" />
+                        )}
+                      </button>
+                    </>
+                  )}
+                </>
               )}
             </div>
           </div>

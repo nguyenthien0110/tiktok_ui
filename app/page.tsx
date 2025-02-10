@@ -16,9 +16,9 @@ export default function Home() {
       <MainLayout>
         <div className="mt-[80px]  w-[calc(100%-90px)] max-w-[690px] ml-auto">
           <ClientOnly>
-            {allPosts.map((post, index) => (
-              <PostMain post={post} key={index} />
-            ))}
+            {allPosts
+              .map((post, index) => <PostMain post={post} key={index} />)
+              .sort(() => 0.5 - Math.random())}
           </ClientOnly>
         </div>
       </MainLayout>

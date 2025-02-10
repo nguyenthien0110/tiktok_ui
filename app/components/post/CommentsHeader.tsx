@@ -147,7 +147,9 @@ export default function CommentsHeader({
           </div>
         </div>
 
-        {contextUser?.user?.id == post?.user_id ? (
+        {contextUser?.user?.id &&
+        post?.user_id &&
+        contextUser?.user?.id == post?.user_id ? (
           <div>
             {isDeleteing ? (
               <BiLoaderCircle className="animate-spin" size="25" />

@@ -54,7 +54,9 @@ export default function SingleComment({
                 </span>
               </span>
 
-              {contextUser?.user?.id == comment.profile.user_id ? (
+              {contextUser?.user?.id &&
+              comment.profile.user_id &&
+              contextUser?.user?.id == comment.profile.user_id ? (
                 <button
                   disabled={isDeleting}
                   onClick={() => deleteThisComment()}
